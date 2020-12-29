@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+@charset "UTF-8";
+
+//-----------------------------------------------------
+// variables scss
+//-----------------------------------------------------
+
+// active state switch
+//-----------------------------------------------------
+$borderBoxSwitch: true !default;
+
+// font相关
+//-----------------------------------------------------
+$fontSize: 14px !default;
+$fontLineHeight: 1.5 !default;
+$fontFamily: system-ui, -apple-system, BlinkMacSystemFont, "Microsoft YaHei UI", "Microsoft YaHei",
+  Roboto, "Hiragino Sans GB", "Source Han Sans CN", Fira Sans, "Droid Sans", "Helvetica Neue", arial,
+  sans-serif !default;
+// 苹方, 冬青黑体，微软雅黑UI（win8.1+），微软雅黑，思源黑体（安卓）
+$fontCn: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei",
+  "Source Han Sans CN" sans-serif !default;
+// 前两个为safari chrome, ios4.0+, ios4.0-, Android 4.0+, Android 4.0-, windows&windows Phone,
+$fontEn: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Roboto, "Droid Sans",
+  "Seogoe UI", Arial !default;
+
+// 背景色，文本色，边框色，链接色
+//-----------------------------------------------------
+$colorText: #333 !default;
+$colorBg: #fff !default;
+$colorBorder: #dbdbdb !default;
+$colorLink: #08c !default;
+$colorPlaceholder: #999 !default; // input placeholder color
+$colorDisabled: (
+  text: #999,
+  bg: #e3e3e3,
+  border: #dbdbdb,
+) !default; // textColor bgColor borderColor
+$colorOverlay: rgba(0, 0, 0, 0.7) !default; // 遮罩层颜色
+
+// 基本颜色
+// color function : http://sass-lang.com/docs/yardoc/Sass/Script/Functions.html
+// lighten($color, $amount)
+// darken($color, $amount)
+// opacity($color, $amount)
+// mix($color1, $color2[, $amount])
+//-----------------------------------------------------
+$gray3: #333;
+$gray6: #666;
+$gray9: #999;
+$grayC: #ccc;
+$grayD: #ddd;
+$grayE: #eee;
+$grayF: #f5f5f5;
+
+$white: #fff !default;
+$black: #000 !default;
+$red: #ff3b30 !default;
+$primary: #f9926e !default; // 主色调
+$contrast: #f3a331 !default; // 对比色
+
+// 元素上下间距
+//-----------------------------------------------------
+$gap: 15px !default;
+
+// header,footer等的高度
+//-----------------------------------------------------
+$barHeight: 44px !default;
+
+// radius
+//-----------------------------------------------------
+$radiusBase: 5px !default;
+$radiusSmall: 3px !default;
+
+// btn
+// 默认的按钮大小，颜色，圆角
+//-----------------------------------------------------
+$btnSize: 1em 34px !default; // 默认按钮的左右padding，高度
+$btnSizeSm: 0.8em 28px !default;
+$btnSizeLg: 1.2em 40px !default;
+
+$inputSize: 1em 34px !default; // 默认按钮的左右padding，高度，行高
+
+// active state switch
+//-----------------------------------------------------
+$activeStateSwitch: true !default;
+
+// grid system
+//-----------------------------------------------------
+$gridClass: true !default;
+
+// z-index
+//-----------------------------------------------------
+$zIndexHeader: 1000 !default;
+$zIndexFooter: 2000 !default;
+$zIndexPopup: 3000 !default;
+$zIndexOverlay: 4000 !default; // 默认高于header和footer部分
+
+// font相关
+//-----------------------------------------------------
+$font-size: 14px !default;
+$pad-font-size: 12px !default;
+$font-line-height: 1.5 !default;
+$font-family: Arial, "Times New Roman", "Microsoft YaHei", SimHei !default;
+
+// color
+$primary-color: #6286ef !default; // 主色
+$secondary-color: #ff6b6b !default; // 辅色
+$contrast-color: #19bfbd !default; // 对比色
+$warning-color: #fc3f59 !default; // 警示颜色
+$info-color: #598ae3 !default; // 蓝色
+$tips-color: #c5a621 !default; //提示颜色
+$link-color: #666 $primary-color !default; // 如果只有一个值则滑过的值为这个值的darken 5%，如果有两个值则第二个值为滑过的值
+$bg-color: #fff !default;
+$placeholder-color: #999 !default;
+$white: white !default;
+$black: black !default;
+$colorPrimary: $primary-color; // for wtdc components
+$colorPrimaryLight: $primary-color; // for wtdc components
+
+// text color
+$text-color: #030311 !default;
+$text-color-secondary: #313453 !default;
+$text-color-light: #bab9c7 !default;
+$text-color-gray: #999 !default;
+
+$text-color-8: rgba($text-color-secondary, 0.8);
+$text-color-6: rgba($text-color-secondary, 0.6);
+$text-color-2: rgba($text-color-secondary, 0.2);
+
+// border color
+$border-color: #ddd !default;
+$border-color-secondary: #eee !default;
+
+// bg color
+$bg-color: #e2e9ee !default;
+$bg-color-secondary: #f8f8f8 !default;
+$bg-color-light: #fafbff !default;
+
+// media
+$tablet-width: 1024px;
+$laptop-width: 1280px;
+$desktop-width: 1920px;

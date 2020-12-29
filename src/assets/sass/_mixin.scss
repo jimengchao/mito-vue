@@ -1,0 +1,628 @@
+@charset "UTF-8";
+// mixin & %
+// 既定义了mixin也定义了%，根据需求使用@include或@extend调用
+//-----------------------------------------------------
+// Center-align a block level element
+@mixin center-block {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+%center-block {
+  @include center-block;
+}
+
+// clearfix
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+%clearfix {
+  @include clearfix;
+}
+
+// ellipsis
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+%ellipsis {
+  @include ellipsis;
+}
+
+// ellipsis multi
+@mixin ellipsis-lines($lines: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  /*! autoprefixer: off */
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+}
+
+%ellipsis-lines {
+  @include ellipsis-lines;
+}
+
+// word-break
+// 用于链接地址强制换行
+@mixin word-break {
+  white-space: normal;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+%word-break {
+  @include word-break;
+}
+
+// disabled
+// 禁用样式，加!important
+@mixin disabled($textColor: nth($colorDisabled, 1), $bgColor: nth($colorDisabled, 2), $borderColor: true) {
+  background-color: $bgColor !important;
+  color: $textColor !important;
+  cursor: default !important;
+  pointer-events: none !important;
+  @if $borderColor {
+    border: 1px solid nth($colorDisabled, 3);
+  }
+}
+
+%disabled {
+  @include disabled;
+}
+
+// fixed top & bottom
+@mixin fixed($pos: 0) {
+  position: fixed;
+  left: 0;
+  right: 0;
+  @if $pos==bottom {
+    bottom: 0;
+  } @else {
+    top: $pos;
+  }
+}
+
+%fixed-top {
+  @include fixed;
+}
+
+%fixed-bottom {
+  @include fixed($pos: bottom);
+}
+
+// justify
+@mixin justify {
+  display: flex;
+  justify-content: space-between;
+}
+
+%justify {
+  @include justify;
+}
+
+// flex 等分
+@mixin equal-flex($children: li) {
+  display: flex;
+  $childrenEle: li div p a span strong;
+  @if index($childrenEle, $children) {
+    #{$children} {
+      flex: 1;
+    }
+  } @else {
+    .#{$children} {
+      flex: 1;
+    }
+  }
+}
+
+%equal-flex {
+  @include equal-flex;
+}
+
+@mixin background-gradient($color1, $color2, $horz: left, $Vert: middle) {
+  @if $horz==left {
+    @if $vert==top {
+      background-image: linear-gradient(135deg, $color1, $color2);
+    } @else if $vert==middle {
+      background-image: linear-gradient(90deg, $color1, $color2);
+    } @else if $vert==bottom {
+      background-image: linear-gradient(-315deg, $color1, $color2);
+    }
+  } @else if $horz==middle {
+    @if $Vert==top {
+      background-image: linear-gradient(90deg, $color2, $color1, $color1, $color2);
+    } @else if $Vert==bottom {
+      background-image: linear-gradient(0deg, $color2, $color1, $color1, $color2);
+    }
+  } @else if $horz==right {
+    @if $vert==top {
+      background-image: linear-gradient(225deg, $color1, $color2);
+    } @else if $vert==middle {
+      background-image: linear-gradient(270deg, $color1, $color2);
+    } @else if $vert==bottom {
+      background-image: linear-gradient(315deg, $color1, $color2);
+    }
+  }
+}
+
+// flex center
+@mixin center-flex($direction: both) {
+  display: flex;
+  @if $direction==both {
+    justify-content: center;
+    align-items: center;
+  } @else if $direction==x {
+    justify-content: center;
+  } @else if $direction==y {
+    align-items: center;
+  }
+}
+
+%center-flex {
+  @include center-flex;
+}
+
+%center-flex-x {
+  @include center-flex(x);
+}
+
+%center-flex-y {
+  @include center-flex(y);
+}
+
+// translate center
+@mixin center-translate($direction: both) {
+  position: absolute;
+  @if $direction==both {
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  } @else if $direction==x {
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+  } @else if $direction==y {
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+%center-translate {
+  @include center-translate;
+}
+
+%center-translate-x {
+  @include center-translate(x);
+}
+
+%center-translate-y {
+  @include center-translate(y);
+}
+
+// triangle 三角箭头
+%triangle-basic {
+  content: "";
+  height: 0;
+  width: 0;
+  overflow: hidden;
+}
+
+@mixin triangle($direction: bottom, $borderWidth: 6px, $borderColor: #666) {
+  @extend %triangle-basic;
+  @if $direction==top {
+    border-bottom: $borderWidth solid $borderColor;
+    border-left: $borderWidth dashed transparent;
+    border-right: $borderWidth dashed transparent;
+  } @else if $direction==right {
+    border-left: $borderWidth solid $borderColor;
+    border-top: $borderWidth dashed transparent;
+    border-bottom: $borderWidth dashed transparent;
+  } @else if $direction==bottom {
+    border-top: $borderWidth solid $borderColor;
+    border-left: $borderWidth dashed transparent;
+    border-right: $borderWidth dashed transparent;
+  } @else if $direction==left {
+    border-right: $borderWidth solid $borderColor;
+    border-top: $borderWidth dashed transparent;
+    border-bottom: $borderWidth dashed transparent;
+  }
+}
+
+@mixin arrow-triangle($direction: bottom, $borderWidth: 6px, $borderColor: #ccc) {
+  position: absolute;
+  s,
+  i {
+    position: absolute;
+  }
+  s {
+    @include triangle($direction, $borderWidth, $borderColor);
+  }
+  i {
+    @include triangle($direction, $borderWidth, $white);
+  }
+  @if ($direction == left) {
+    s {
+      left: 0;
+    }
+    i {
+      left: 1px;
+    }
+  } @else if ($direction == right) {
+    s {
+      right: 0;
+    }
+    i {
+      right: 1px;
+    }
+  } @else if ($direction == top) {
+    s {
+      top: 0;
+    }
+    i {
+      top: 1px;
+    }
+  } @else if ($direction == bottom) {
+    s {
+      bottom: 0;
+    }
+    i {
+      bottom: 1px;
+    }
+  }
+}
+
+%triangle-bottom {
+  @include triangle;
+}
+
+%triangle-top {
+  @include triangle($direction: top);
+}
+
+//Image
+%image-style {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@mixin image-responsive($width: 140px, $height: 200px, $children: img) {
+  & {
+    position: relative;
+    padding-top: $height / $width * 100%;
+    #{$children} {
+      @extend %image-style;
+    }
+  }
+}
+
+%image-responsive {
+  @include image-responsive;
+}
+
+%image-responsive1by1 {
+  @include image-responsive(100, 100);
+}
+
+// px to rem
+@function px2rem($value, $fontSizeRoot: $fontSize) {
+  @return $value / $fontSizeRoot * 1rem;
+}
+
+//font-dpr
+@mixin font-dpr($font-size) {
+  font-size: $font-size;
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+  }
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+  }
+}
+
+//props-dpr
+@mixin props-dpr($props, $values) {
+  @if length($props) ==1 {
+    @if length($values) ==1 {
+      #{$props}: $values;
+      [data-dpr="2"] & {
+        #{$props}: $values * 2;
+      }
+      [data-dpr="3"] & {
+        #{$props}: $values * 3;
+      }
+    } @else {
+      $valueStr: ();
+      @each $value in $values {
+        $valueStr: append($valueStr, $value);
+      }
+      #{$props}: $valueStr;
+      [data-dpr="2"] & {
+        $valueStr: ();
+        @each $value in $values {
+          $valueStr: append($valueStr, $value * 2);
+        }
+        #{$props}: $valueStr;
+      }
+      [data-dpr="3"] & {
+        $valueStr: ();
+        @each $value in $values {
+          $valueStr: append($valueStr, $value * 3);
+        }
+        #{$props}: $valueStr;
+      }
+      //@debug $valueStr;
+    }
+  } @else {
+    @each $prop in $props {
+      #{$prop}: nth($values, index($props, $prop));
+    }
+    [data-dpr="2"] & {
+      @each $prop in $props {
+        #{$prop}: nth($values, index($props, $prop)) * 2;
+      }
+    }
+    [data-dpr="3"] & {
+      @each $prop in $props {
+        #{$prop}: nth($values, index($props, $prop)) * 3;
+      }
+    }
+  }
+}
+
+//其他占位符
+%transition-all {
+  transition: all 0.3s ease-in-out;
+}
+
+%page-out {
+  transition: transform 0.4s cubic-bezier(0.42, 0, 0.58, 1) 0.1s;
+}
+
+%page-in {
+  transition: transform 0.3s cubic-bezier(0.42, 0, 0.58, 1);
+}
+
+//Font size
+%f10 {
+  font-size: 10px;
+}
+
+%f12 {
+  font-size: 12px;
+}
+
+%f14 {
+  font-size: 14px !important;
+}
+
+%f15 {
+  font-size: 15px;
+}
+
+%f16 {
+  font-size: 16px;
+}
+
+%f18 {
+  font-size: 18px;
+}
+
+%f20 {
+  font-size: 20px;
+}
+
+%f22 {
+  font-size: 22px;
+}
+
+%f24 {
+  font-size: 24px;
+}
+
+%f30 {
+  font-size: 30px;
+}
+
+//Margin
+%mb10 {
+  margin-bottom: 10px;
+}
+
+%mb20 {
+  margin-bottom: 20px;
+}
+
+%mb30 {
+  margin-bottom: 30px;
+}
+
+%mr10 {
+  margin-bottom: 10px;
+}
+
+%ml10 {
+  margin-bottom: 10px;
+}
+
+@mixin blur($value) {
+  -webkit-filter: blur($value);
+  -moz-filter: blur($value);
+  -o-filter: blur($value);
+  //filter: url(blur.svg#blur);
+  //filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+  //-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  //filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  filter: blur($value);
+}
+
+//表单错误提醒
+%error-inline {
+  .FormItem .error-detail {
+    margin-left: 10px;
+    font-size: 12px;
+    color: red;
+  }
+}
+
+%error-block {
+  .FormItem .error-detail {
+    display: block;
+    margin-top: 5px;
+    margin-left: 0;
+    font-size: 12px;
+    color: red;
+  }
+}
+
+%table-border-none {
+  //border-left: 1px solid $colorBorder;
+  //border-right: 1px solid $colorBorder;
+  th,
+  td {
+    border-left: 0;
+    border-right: 0;
+  }
+  th {
+    border-bottom: 1px solid $colorBorder;
+    border-top: 1px solid $colorBorder;
+    font-weight: normal;
+    &:first-child {
+      border-left: 1px solid $colorBorder;
+    }
+    &:last-child {
+      border-right: 1px solid $colorBorder;
+    }
+  }
+  td {
+    border-bottom: 1px solid rgba($colorBorder, 0.5);
+    &:first-child {
+      border-left: 1px solid rgba($colorBorder, 0.5);
+    }
+    &:last-child {
+      border-right: 1px solid rgba($colorBorder, 0.5);
+    }
+  }
+}
+
+//日期选择器
+%datepicker-sm {
+  .DatePicker {
+    .date-input-wrap {
+      .date-input {
+        height: 28px;
+        padding: 5px 10px;
+        line-height: 18px;
+        font-size: 12px;
+      }
+      .ic {
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+      }
+    }
+  }
+}
+
+%grid-sm {
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+    [class^="col-"] {
+      margin-bottom: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+}
+
+%grid-lg {
+  .row {
+    margin-left: -20px;
+    margin-right: -20px;
+    [class^="col-"] {
+      margin-bottom: 40px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}
+
+%grid-none {
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+    [class^="col-"] {
+      margin-bottom: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}
+
+%inline-block {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+//媒体查询
+@mixin tablet {
+  @media screen and (max-device-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-device-width: #{$laptop-width}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-device-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+@mixin less-than-lg {
+  @media screen and (max-width: 1199px) {
+    @content;
+  }
+}
+
+@mixin less-than-xl {
+  @media screen and (max-width: 1599px) {
+    @content;
+  }
+}
+
+// common
+@mixin item-vertical-bar($barHeight: 16px) {
+  position: relative;
+  &:after {
+    content: "";
+    display: inline-block;
+    @include center-translate(y);
+    right: 0;
+    width: 1px;
+    height: $barHeight;
+    background-color: #eee;
+  }
+
+  &:last-of-type:after {
+    content: none;
+  }
+}

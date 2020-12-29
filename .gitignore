@@ -1,0 +1,31 @@
+# Specifies intentionally untracked files to ignore when using Git
+# http://git-scm.com/docs/gitignore
+
+# WebStorm
+.idea/
+
+# OSX
+.DS_Store
+
+# bower & npm & yarn
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
+
+# vscode
+.history
+.vscode
+
+# temp
+.tmp/
+
+# build
+dist/
+
+#cache
+.cache-loader/
+.cacheuglify/
+
+# log
+*.log
